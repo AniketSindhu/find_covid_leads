@@ -1,9 +1,11 @@
 import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:find_covid_leads/methods/getLocations.dart';
+import 'package:find_covid_leads/methods/queryPost.dart';
 import 'package:find_covid_leads/models/post.dart';
 import 'package:find_covid_leads/widgets/postWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class Homepage extends StatefulWidget {
@@ -13,6 +15,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   int location = 0;
+  String loc = 'All';
   int resouce = 0;
 
   List<String> availableResources = [
@@ -27,11 +30,27 @@ class _HomepageState extends State<Homepage> {
     'Beds',
     'Food',
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.app_registration),
+              onPressed: () {
+                launch('https://forms.gle/kKUtTH5hvtsU9vLS6');
+              },
+              tooltip: 'Become a moderator',
+            ).px8(),
+            IconButton(
+              icon: Icon(Icons.bug_report),
+              onPressed: () {
+                launch(
+                    'https://github.com/AniketSindhu/find_covid_leads/issues/new');
+              },
+              tooltip: 'Report a bug',
+            ).px8(),
+          ],
           backgroundColor: Colors.redAccent,
           title: "Find Covid Leads".text.make(),
           centerTitle: true,
@@ -66,7 +85,10 @@ class _HomepageState extends State<Homepage> {
                             runSpacing: 10,
                             choiceActiveStyle:
                                 C2ChoiceStyle(color: Colors.redAccent),
-                            onChanged: (val) => setState(() => location = val),
+                            onChanged: (val) => setState(() {
+                              loc = snap.data[val];
+                              location = val;
+                            }),
                             choiceItems: C2Choice.listFrom<int, dynamic>(
                               source: snap.data,
                               value: (i, v) => i,
@@ -140,7 +162,10 @@ class _HomepageState extends State<Homepage> {
                             runSpacing: 10,
                             choiceActiveStyle:
                                 C2ChoiceStyle(color: Colors.redAccent),
-                            onChanged: (val) => setState(() => location = val),
+                            onChanged: (val) => setState(() {
+                              loc = snap.data[val];
+                              location = val;
+                            }),
                             choiceItems: C2Choice.listFrom<int, dynamic>(
                               source: snap.data,
                               value: (i, v) => i,
@@ -192,10 +217,7 @@ class _HomepageState extends State<Homepage> {
             ),
             20.heightBox,
             StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('posts')
-                  .orderBy('time', descending: true)
-                  .snapshots(),
+              stream: queryPost(loc, availableResources[resouce]),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Column(
@@ -233,7 +255,10 @@ class _HomepageState extends State<Homepage> {
                           Post post = Post.fromDocument(
                               snapshot.data.docs[index].data());
                           return VxResponsive(
-                            xlarge: postWidget(post, context)
+                            xlarge: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.55)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -241,7 +266,10 @@ class _HomepageState extends State<Homepage> {
                                     borderRadius: BorderRadius.circular(5)))
                                 .makeCentered()
                                 .py12(),
-                            large: postWidget(post, context)
+                            large: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.55)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -249,7 +277,10 @@ class _HomepageState extends State<Homepage> {
                                     borderRadius: BorderRadius.circular(5)))
                                 .makeCentered()
                                 .py12(),
-                            medium: postWidget(post, context)
+                            medium: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.75)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -257,7 +288,10 @@ class _HomepageState extends State<Homepage> {
                                     borderRadius: BorderRadius.circular(5)))
                                 .makeCentered()
                                 .py12(),
-                            small: postWidget(post, context)
+                            small: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.9)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -265,7 +299,10 @@ class _HomepageState extends State<Homepage> {
                                     borderRadius: BorderRadius.circular(5)))
                                 .makeCentered()
                                 .py12(),
-                            xsmall: postWidget(post, context)
+                            xsmall: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.9)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -273,7 +310,10 @@ class _HomepageState extends State<Homepage> {
                                     borderRadius: BorderRadius.circular(5)))
                                 .makeCentered()
                                 .py12(),
-                            fallback: postWidget(post, context)
+                            fallback: VxBox(
+                                    child: PostWidget(
+                                        post: post, context: context))
+                                .shadow
                                 .width(context.screenWidth * 0.75)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
