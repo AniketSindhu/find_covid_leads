@@ -61,7 +61,7 @@ class _HomepageState extends State<Homepage> {
                 Icons.app_registration,
                 color: Color(0xff0172c0),
               ),
-              title: "Become a moderator".text.make(),
+              title: "Become a volunteer".text.make(),
               onTap: () {
                 launch('https://forms.gle/kKUtTH5hvtsU9vLS6');
               },
