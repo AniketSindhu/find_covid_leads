@@ -129,7 +129,7 @@ class _WebFilterState extends State<WebFilter> {
             5.widthBox,
             AutoSizeText(
               'What resources you\'re looking for?',
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               maxLines: 2,
             )
           ]),

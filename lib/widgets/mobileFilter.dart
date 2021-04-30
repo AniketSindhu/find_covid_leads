@@ -52,7 +52,7 @@ class _MobileFilterState extends State<MobileFilter> {
               color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "Filter location".text.bold.size(15).make()
+            "Filter by location".text.bold.size(15).make()
           ]),
           10.heightBox,
           locations.isEmpty
