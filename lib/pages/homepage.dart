@@ -1,9 +1,9 @@
-import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:find_covid_leads/methods/getLocations.dart';
 import 'package:find_covid_leads/methods/queryPost.dart';
 import 'package:find_covid_leads/models/post.dart';
+import 'package:find_covid_leads/widgets/mobileFilter.dart';
 import 'package:find_covid_leads/widgets/postWidget.dart';
+import 'package:find_covid_leads/widgets/webFilter.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -17,7 +17,8 @@ class _HomepageState extends State<Homepage> {
   int location = 0;
   String loc = 'All';
   int resouce = 0;
-
+  bool showMoreLoc = false;
+  bool showMoreResources = false;
   List<String> availableResources = [
     'All',
     'Remdesivir',
@@ -30,29 +31,57 @@ class _HomepageState extends State<Homepage> {
     'Beds',
     'Food',
   ];
+  void updateLoc(val) {
+    setState(() {
+      loc = val;
+    });
+  }
+
+  void updateRes(val) {
+    setState(() {
+      resouce = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.app_registration),
-              onPressed: () {
-                launch('https://forms.gle/kKUtTH5hvtsU9vLS6');
-              },
-              tooltip: 'Become a moderator',
-            ).px8(),
-            IconButton(
-              icon: Icon(Icons.bug_report),
-              onPressed: () {
+        drawer: Drawer(
+          child: VStack([
+            SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.bug_report,
+                color: Colors.redAccent,
+              ),
+              title: "Report a bug".text.make(),
+              onTap: () {
                 launch(
                     'https://github.com/AniketSindhu/find_covid_leads/issues/new');
               },
-              tooltip: 'Report a bug',
-            ).px8(),
-          ],
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(
+                Icons.app_registration,
+                color: Colors.redAccent,
+              ),
+              title: "Become a moderator".text.make(),
+              onTap: () {
+                launch('https://forms.gle/kKUtTH5hvtsU9vLS6');
+              },
+            )
+          ]),
+        ),
+        appBar: AppBar(
           backgroundColor: Colors.redAccent,
-          title: "Find Covid Leads".text.make(),
+          title: Image.asset(
+            'logo.png',
+            fit: BoxFit.cover,
+            height: 32,
+          ),
           centerTitle: true,
         ),
         backgroundColor: Color(0xffDAE0E6),
@@ -60,162 +89,15 @@ class _HomepageState extends State<Homepage> {
           children: [
             20.heightBox,
             VxDevice(
-              mobile: VStack(
-                [
-                  VxBox(
-                          child: VStack([
-                    HStack([
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.redAccent,
-                      ),
-                      5.widthBox,
-                      "Filter Location".text.bold.size(15).make()
-                    ]),
-                    10.heightBox,
-                    FutureBuilder(
-                        future: getLocations(),
-                        builder: (context, snap) {
-                          if (snap.connectionState == ConnectionState.waiting) {
-                            return Container();
-                          }
-                          return ChipsChoice<int>.single(
-                            wrapped: true,
-                            value: location,
-                            runSpacing: 10,
-                            choiceActiveStyle:
-                                C2ChoiceStyle(color: Colors.redAccent),
-                            onChanged: (val) => setState(() {
-                              loc = snap.data[val];
-                              location = val;
-                            }),
-                            choiceItems: C2Choice.listFrom<int, dynamic>(
-                              source: snap.data,
-                              value: (i, v) => i,
-                              label: (i, v) => v,
-                            ),
-                          );
-                        })
-                  ]).p12())
-                      .width(context.screenWidth * 0.9)
-                      .shadowSm
-                      .white
-                      .roundedSM
-                      .make()
-                      .py8(),
-                  VxBox(
-                          child: VStack([
-                    HStack([
-                      Icon(
-                        Icons.local_hospital_rounded,
-                        color: Colors.redAccent,
-                      ),
-                      5.widthBox,
-                      "Filter Resources".text.bold.size(15).make()
-                    ]),
-                    10.heightBox,
-                    ChipsChoice<int>.single(
-                      wrapped: true,
-                      value: resouce,
-                      runSpacing: 10,
-                      choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
-                      onChanged: (val) => setState(() => resouce = val),
-                      choiceItems: C2Choice.listFrom<int, String>(
-                        source: availableResources,
-                        value: (i, v) => i,
-                        label: (i, v) => v,
-                      ),
-                    )
-                  ]).p12())
-                      .width(context.screenWidth * 0.9)
-                      .shadowSm
-                      .white
-                      .roundedSM
-                      .make()
-                      .py8(),
-                ],
-                alignment: MainAxisAlignment.spaceEvenly,
-                axisSize: MainAxisSize.max,
-              ),
-              web: HStack(
-                [
-                  VxBox(
-                          child: VStack([
-                    HStack([
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.redAccent,
-                      ),
-                      5.widthBox,
-                      "Filter Location".text.bold.size(15).make()
-                    ]),
-                    10.heightBox,
-                    FutureBuilder(
-                        future: getLocations(),
-                        builder: (context, snap) {
-                          if (snap.connectionState == ConnectionState.waiting) {
-                            return Container();
-                          }
-                          return ChipsChoice<int>.single(
-                            wrapped: true,
-                            value: location,
-                            runSpacing: 10,
-                            choiceActiveStyle:
-                                C2ChoiceStyle(color: Colors.redAccent),
-                            onChanged: (val) => setState(() {
-                              loc = snap.data[val];
-                              location = val;
-                            }),
-                            choiceItems: C2Choice.listFrom<int, dynamic>(
-                              source: snap.data,
-                              value: (i, v) => i,
-                              label: (i, v) => v,
-                            ),
-                          );
-                        })
-                  ]).p12())
-                      .width(context.screenWidth * 0.45)
-                      .shadowSm
-                      .white
-                      .roundedSM
-                      .make()
-                      .px8(),
-                  VxBox(
-                          child: VStack([
-                    HStack([
-                      Icon(
-                        Icons.local_hospital_rounded,
-                        color: Colors.redAccent,
-                      ),
-                      5.widthBox,
-                      "Filter Resources".text.bold.size(15).make()
-                    ]),
-                    10.heightBox,
-                    ChipsChoice<int>.single(
-                      wrapped: true,
-                      value: resouce,
-                      runSpacing: 10,
-                      choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
-                      onChanged: (val) => setState(() => resouce = val),
-                      choiceItems: C2Choice.listFrom<int, String>(
-                        source: availableResources,
-                        value: (i, v) => i,
-                        label: (i, v) => v,
-                      ),
-                    )
-                  ]).p12())
-                      .width(context.screenWidth * 0.45)
-                      .shadowSm
-                      .white
-                      .roundedSM
-                      .make()
-                      .px8(),
-                ],
-                alignment: MainAxisAlignment.spaceEvenly,
-                axisSize: MainAxisSize.max,
-              ),
-            ),
-            20.heightBox,
+                mobile: MobileFilter(
+                  updateLoc: updateLoc,
+                  updateRes: updateRes,
+                ),
+                web: WebFilter(
+                  updateLoc: updateLoc,
+                  updateRes: updateRes,
+                )),
+            10.heightBox,
             StreamBuilder(
               stream: queryPost(loc, availableResources[resouce]),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
