@@ -1,4 +1,3 @@
-import 'package:chips_choice/chips_choice.dart';
 import 'package:find_covid_leads/methods/getLocations.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';

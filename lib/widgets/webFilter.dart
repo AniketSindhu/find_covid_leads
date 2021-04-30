@@ -14,8 +14,8 @@ class WebFilter extends StatefulWidget {
 class _WebFilterState extends State<WebFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
-  int location = 0;
-  int resouce = 0;
+  String location = 'All';
+  String resouce = 'All';
   List<String> availableResources = [
     'All',
     'Remdesivir',
@@ -52,12 +52,30 @@ class _WebFilterState extends State<WebFilter> {
               color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "Filter Location".text.bold.size(15).make()
+            "Filter location".text.bold.size(15).make()
           ]),
           10.heightBox,
           locations.isEmpty
               ? CircularProgressIndicator().centered()
-              : Column(
+              : DropdownButtonFormField(
+                  iconEnabledColor: Color(0xff0172c0),
+                  value: location,
+                  onChanged: (val) {
+                    location = val;
+                    widget.updateLoc(val);
+                    setState(() {});
+                  },
+                  items: locations
+                      .map((e) => DropdownMenuItem(
+                            child: '$e'.text.size(15).make().px4(),
+                            value: e,
+                            onTap: () {
+                              print(e);
+                            },
+                          ))
+                      .toList())
+
+          /*  Column(
                   children: [
                     ChipsChoice<int>.single(
                       wrapped: showMoreLoc,
@@ -93,14 +111,14 @@ class _WebFilterState extends State<WebFilter> {
                       ]).px8().objectCenterRight(),
                     )
                   ],
-                ),
+                ),*/
         ]).p12())
             .width(context.screenWidth * 0.45)
             .shadowSm
             .white
             .roundedSM
             .make()
-            .px8(),
+            .py4(),
         VxBox(
                 child: VStack([
           HStack([
@@ -109,10 +127,27 @@ class _WebFilterState extends State<WebFilter> {
               color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "Filter Resources".text.bold.size(15).make()
+            "What resources you are looking for?".text.bold.size(15).make()
           ]),
           10.heightBox,
-          ChipsChoice<int>.single(
+          DropdownButtonFormField(
+              iconEnabledColor: Color(0xff0172c0),
+              value: resouce,
+              onChanged: (val) {
+                resouce = val;
+                widget.updateRes(val);
+                setState(() {});
+              },
+              items: availableResources
+                  .map((e) => DropdownMenuItem(
+                        child: '$e'.text.size(15).make().px4(),
+                        value: e,
+                        onTap: () {
+                          print(e);
+                        },
+                      ))
+                  .toList())
+/*           ChipsChoice<int>.single(
             wrapped: showMoreRes,
             value: resouce,
             runSpacing: 10,
@@ -142,14 +177,14 @@ class _WebFilterState extends State<WebFilter> {
                   : Icon(Icons.arrow_downward_rounded),
               showMoreRes ? "Show less".text.make() : "Show more".text.make()
             ]).px8().objectCenterRight(),
-          )
+          ) */
         ]).p12())
             .width(context.screenWidth * 0.45)
             .shadowSm
             .white
             .roundedSM
             .make()
-            .px8(),
+            .py8(),
       ],
       alignment: MainAxisAlignment.spaceEvenly,
       axisSize: MainAxisSize.max,

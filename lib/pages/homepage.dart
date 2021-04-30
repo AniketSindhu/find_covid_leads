@@ -14,6 +14,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int location = 0;
   String loc = 'All';
   String resouce = 'All';
@@ -32,8 +33,9 @@ class _HomepageState extends State<Homepage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context1) {
     return Scaffold(
+        key: _scaffoldKey,
         drawer: Drawer(
           child: VStack([
             SizedBox(
@@ -63,7 +65,7 @@ class _HomepageState extends State<Homepage> {
             )
           ]),
         ),
-        appBar: AppBar(
+/*         appBar: AppBar(
           backgroundColor: Color(0xff0172c0),
           title: Image.asset(
             'logo.png',
@@ -71,11 +73,28 @@ class _HomepageState extends State<Homepage> {
             height: 32,
           ),
           centerTitle: true,
-        ),
+        ), */
         backgroundColor: Color(0xffDAE0E6),
         body: Column(
           children: [
-            20.heightBox,
+            15.heightBox,
+            Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                  child: Icon(Icons.menu, color: Color(0xff0172c0))
+                      .objectCenterLeft()
+                      .p12(),
+                ).objectTopLeft(),
+                Image.asset(
+                  'assets/logo2.png',
+                  height: 40,
+                ).centered(),
+              ],
+            ),
+            10.heightBox,
             VxDevice(
                 mobile: MobileFilter(
                   updateLoc: updateLoc,
