@@ -5,6 +5,7 @@ import 'package:find_covid_leads/widgets/mobileFilter.dart';
 import 'package:find_covid_leads/widgets/postWidget.dart';
 import 'package:find_covid_leads/widgets/webFilter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -17,7 +18,7 @@ class _HomepageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int location = 0;
   String loc = 'All';
-  String resouce = 'All';
+  List<String> resouce = [];
   bool showMoreLoc = false;
   bool showMoreResources = false;
   void updateLoc(String val) {
@@ -26,7 +27,7 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  void updateRes(String val) {
+  void updateRes(List<String> val) {
     setState(() {
       resouce = val;
     });
@@ -38,6 +39,8 @@ class _HomepageState extends State<Homepage> {
         key: _scaffoldKey,
         drawer: Drawer(
           child: VStack([
+            Image.asset('assets/drawer.jpeg'),
+            10.heightBox,
             SizedBox(
               height: 10,
             ),
@@ -62,7 +65,15 @@ class _HomepageState extends State<Homepage> {
               onTap: () {
                 launch('https://forms.gle/kKUtTH5hvtsU9vLS6');
               },
-            )
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.mail, color: Color(0xff0172c0)),
+              title: "Contact us".text.make(),
+              onTap: () {
+                launch('mailto:findcovidleads@gmail.com');
+              },
+            ),
           ]),
         ),
 /*         appBar: AppBar(
@@ -95,6 +106,14 @@ class _HomepageState extends State<Homepage> {
               ],
             ),
             10.heightBox,
+            "We provide all latest covid resources in a single place."
+                .text
+                .center
+                .medium
+                .size(15)
+                .make()
+                .px8(),
+            10.heightBox,
             VxDevice(
                 mobile: MobileFilter(
                   updateLoc: updateLoc,
@@ -105,6 +124,31 @@ class _HomepageState extends State<Homepage> {
                   updateRes: updateRes,
                 )),
             10.heightBox,
+            ElevatedButton(
+              onPressed: () {
+                launch(
+                    'https://docs.google.com/document/d/1AnLQg7C6f-bRtpJoaEMHiOApXIE0FNq9rF8bMHhHn2I/edit?usp=sharing');
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.fileAlt,
+                    color: Colors.white,
+                    size: 20,
+                  ).px8(),
+                  Text(
+                    "Important covid links/resources",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ).pOnly(right: 8),
+                ],
+              ).py8(),
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(8),
+                  backgroundColor:
+                      MaterialStateProperty.all(Color(0xff0172c0))),
+            ),
             StreamBuilder(
               stream: queryPost(loc, resouce),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

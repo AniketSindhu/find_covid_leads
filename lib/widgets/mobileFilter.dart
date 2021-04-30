@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:chips_choice/chips_choice.dart';
 import 'package:find_covid_leads/methods/getLocations.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +16,8 @@ class _MobileFilterState extends State<MobileFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
   String location = 'All';
-  String resouce = 'All';
+  List<String> resources = [];
   List<String> availableResources = [
-    'All',
     'Remdesivir',
     'Favipiravir',
     'Oxygen',
@@ -126,10 +127,14 @@ class _MobileFilterState extends State<MobileFilter> {
               color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "What resources you are looking for?".text.bold.size(15).make()
+            AutoSizeText(
+              'What resources you\'re looking for?',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              maxLines: 2,
+            )
           ]),
           10.heightBox,
-          DropdownButtonFormField(
+/*           DropdownButtonFormField(
               iconEnabledColor: Color(0xff0172c0),
               value: resouce,
               onChanged: (val) {
@@ -145,8 +150,26 @@ class _MobileFilterState extends State<MobileFilter> {
                           print(e);
                         },
                       ))
-                  .toList())
-/*           ChipsChoice<int>.single(
+                  .toList()) */
+          ChipsChoice<String>.multiple(
+            wrapped: showMoreRes,
+            spacing: 8,
+            runSpacing: 8,
+            wrapCrossAlignment: WrapCrossAlignment.start,
+            choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
+            value: resources,
+            choiceItems: C2Choice.listFrom<String, String>(
+              source: availableResources,
+              value: (i, v) => v,
+              label: (i, v) => v,
+            ),
+            onChanged: (val) {
+              resources = val;
+              widget.updateRes(val);
+              print(resources);
+            },
+          ),
+/*           ChipsChoice<int>.multiple(
             wrapped: showMoreRes,
             value: resouce,
             runSpacing: 10,
@@ -161,7 +184,7 @@ class _MobileFilterState extends State<MobileFilter> {
               value: (i, v) => i,
               label: (i, v) => v,
             ),
-          ),
+          ), */
           SizedBox(
             height: 8,
           ),
@@ -176,7 +199,7 @@ class _MobileFilterState extends State<MobileFilter> {
                   : Icon(Icons.arrow_downward_rounded),
               showMoreRes ? "Show less".text.make() : "Show more".text.make()
             ]).px8().objectCenterRight(),
-          ) */
+          )
         ]).p12())
             .width(context.screenWidth * 0.9)
             .shadowSm
