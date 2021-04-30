@@ -51,7 +51,7 @@ class _PostWidgetState extends State<PostWidget> {
                       },
                       child: Icon(
                         Icons.thumb_up_alt,
-                        color: upvoted ? Colors.redAccent : Colors.grey,
+                        color: upvoted ? Color(0xff0172c0) : Colors.grey,
                         size: 20,
                       ),
                     ),
@@ -107,7 +107,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ? Container().h(0).w(0)
                       : ConstrainedBox(
                           constraints: BoxConstraints(
-                              maxHeight: context.screenHeight * 0.9,
+                              maxHeight: context.screenHeight * 0.5,
                               maxWidth: double.infinity,
                               minWidth: 100,
                               minHeight: 200),
@@ -134,7 +134,7 @@ class _PostWidgetState extends State<PostWidget> {
                     children: widget.post.resources
                         .map((e) => Chip(
                               label: '$e'.toString().text.white.make(),
-                              backgroundColor: Colors.redAccent,
+                              backgroundColor: Color(0xff0172c0),
                             ))
                         .toList(),
                   ).objectBottomLeft(),
@@ -151,15 +151,9 @@ class _PostWidgetState extends State<PostWidget> {
                       : Container(),
                   widget.post.description != null ||
                           widget.post.description.trim().length != 0
-                      ? ReadMoreText(
+                      ? Text(
                           widget.post.description,
-                          trimLines: 2,
-                          colorClickableText: Colors.redAccent,
-                          trimMode: TrimMode.Line,
-                          trimCollapsedText: 'read more',
-                          trimExpandedText: 'Show less',
-                          moreStyle: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 14),
                         ).objectCenterLeft()
                       : Container()
                 ],

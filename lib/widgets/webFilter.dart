@@ -49,7 +49,7 @@ class _WebFilterState extends State<WebFilter> {
           HStack([
             Icon(
               Icons.location_on,
-              color: Colors.redAccent,
+              color: Color(0xff0172c0),
             ),
             5.widthBox,
             "Filter Location".text.bold.size(15).make()
@@ -63,7 +63,8 @@ class _WebFilterState extends State<WebFilter> {
                       wrapped: showMoreLoc,
                       value: location,
                       runSpacing: 10,
-                      choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
+                      choiceActiveStyle:
+                          C2ChoiceStyle(color: Color(0xff0172c0)),
                       onChanged: (val) {
                         location = val;
                         widget.updateLoc(locations[val]);
@@ -88,7 +89,7 @@ class _WebFilterState extends State<WebFilter> {
                             : Icon(Icons.arrow_downward_rounded),
                         showMoreLoc
                             ? "Show less".text.make()
-                            : "Expand".text.make()
+                            : "Show more".text.make()
                       ]).px8().objectCenterRight(),
                     )
                   ],
@@ -105,7 +106,7 @@ class _WebFilterState extends State<WebFilter> {
           HStack([
             Icon(
               Icons.local_hospital_rounded,
-              color: Colors.redAccent,
+              color: Color(0xff0172c0),
             ),
             5.widthBox,
             "Filter Resources".text.bold.size(15).make()
@@ -115,7 +116,7 @@ class _WebFilterState extends State<WebFilter> {
             wrapped: showMoreRes,
             value: resouce,
             runSpacing: 10,
-            choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
+            choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
             onChanged: (val) {
               widget.updateRes(val);
               resouce = val;
@@ -139,7 +140,7 @@ class _WebFilterState extends State<WebFilter> {
               showMoreRes
                   ? Icon(Icons.arrow_upward_rounded)
                   : Icon(Icons.arrow_downward_rounded),
-              showMoreRes ? "Show less".text.make() : "Expand".text.make()
+              showMoreRes ? "Show less".text.make() : "Show more".text.make()
             ]).px8().objectCenterRight(),
           )
         ]).p12())

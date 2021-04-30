@@ -14,8 +14,8 @@ class MobileFilter extends StatefulWidget {
 class _MobileFilterState extends State<MobileFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
-  int location = 0;
-  int resouce = 0;
+  String location = 'All';
+  String resouce = 'All';
   List<String> availableResources = [
     'All',
     'Remdesivir',
@@ -49,21 +49,40 @@ class _MobileFilterState extends State<MobileFilter> {
           HStack([
             Icon(
               Icons.location_on,
-              color: Colors.redAccent,
+              color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "Filter Location".text.bold.size(15).make()
+            "Filter location".text.bold.size(15).make()
           ]),
           10.heightBox,
           locations.isEmpty
               ? CircularProgressIndicator().centered()
-              : Column(
+              : DropdownButtonFormField(
+                  iconEnabledColor: Color(0xff0172c0),
+                  value: location,
+                  onChanged: (val) {
+                    location = val;
+                    widget.updateLoc(val);
+                    setState(() {});
+                  },
+                  items: locations
+                      .map((e) => DropdownMenuItem(
+                            child: '$e'.text.size(15).make().px4(),
+                            value: e,
+                            onTap: () {
+                              print(e);
+                            },
+                          ))
+                      .toList())
+
+          /*  Column(
                   children: [
                     ChipsChoice<int>.single(
                       wrapped: showMoreLoc,
                       value: location,
                       runSpacing: 10,
-                      choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
+                      choiceActiveStyle:
+                          C2ChoiceStyle(color: Color(0xff0172c0)),
                       onChanged: (val) {
                         location = val;
                         widget.updateLoc(locations[val]);
@@ -88,11 +107,11 @@ class _MobileFilterState extends State<MobileFilter> {
                             : Icon(Icons.arrow_downward_rounded),
                         showMoreLoc
                             ? "Show less".text.make()
-                            : "Expand".text.make()
+                            : "Show more".text.make()
                       ]).px8().objectCenterRight(),
                     )
                   ],
-                ),
+                ),*/
         ]).p12())
             .width(context.screenWidth * 0.9)
             .shadowSm
@@ -105,17 +124,34 @@ class _MobileFilterState extends State<MobileFilter> {
           HStack([
             Icon(
               Icons.local_hospital_rounded,
-              color: Colors.redAccent,
+              color: Color(0xff0172c0),
             ),
             5.widthBox,
-            "Filter Resources".text.bold.size(15).make()
+            "What resources you are looking for?".text.bold.size(15).make()
           ]),
           10.heightBox,
-          ChipsChoice<int>.single(
+          DropdownButtonFormField(
+              iconEnabledColor: Color(0xff0172c0),
+              value: resouce,
+              onChanged: (val) {
+                resouce = val;
+                widget.updateRes(val);
+                setState(() {});
+              },
+              items: availableResources
+                  .map((e) => DropdownMenuItem(
+                        child: '$e'.text.size(15).make().px4(),
+                        value: e,
+                        onTap: () {
+                          print(e);
+                        },
+                      ))
+                  .toList())
+/*           ChipsChoice<int>.single(
             wrapped: showMoreRes,
             value: resouce,
             runSpacing: 10,
-            choiceActiveStyle: C2ChoiceStyle(color: Colors.redAccent),
+            choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
             onChanged: (val) {
               widget.updateRes(val);
               resouce = val;
@@ -139,9 +175,9 @@ class _MobileFilterState extends State<MobileFilter> {
               showMoreRes
                   ? Icon(Icons.arrow_upward_rounded)
                   : Icon(Icons.arrow_downward_rounded),
-              showMoreRes ? "Show less".text.make() : "Expand".text.make()
+              showMoreRes ? "Show less".text.make() : "Show more".text.make()
             ]).px8().objectCenterRight(),
-          )
+          ) */
         ]).p12())
             .width(context.screenWidth * 0.9)
             .shadowSm

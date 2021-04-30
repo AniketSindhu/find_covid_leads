@@ -16,28 +16,16 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   int location = 0;
   String loc = 'All';
-  int resouce = 0;
+  String resouce = 'All';
   bool showMoreLoc = false;
   bool showMoreResources = false;
-  List<String> availableResources = [
-    'All',
-    'Remdesivir',
-    'Favipiravir',
-    'Oxygen',
-    'Ventilator',
-    'Plasma',
-    'Tocilizumab',
-    'ICU',
-    'Beds',
-    'Food',
-  ];
-  void updateLoc(val) {
+  void updateLoc(String val) {
     setState(() {
       loc = val;
     });
   }
 
-  void updateRes(val) {
+  void updateRes(String val) {
     setState(() {
       resouce = val;
     });
@@ -54,7 +42,7 @@ class _HomepageState extends State<Homepage> {
             ListTile(
               leading: Icon(
                 Icons.bug_report,
-                color: Colors.redAccent,
+                color: Color(0xff0172c0),
               ),
               title: "Report a bug".text.make(),
               onTap: () {
@@ -66,7 +54,7 @@ class _HomepageState extends State<Homepage> {
             ListTile(
               leading: Icon(
                 Icons.app_registration,
-                color: Colors.redAccent,
+                color: Color(0xff0172c0),
               ),
               title: "Become a moderator".text.make(),
               onTap: () {
@@ -76,7 +64,7 @@ class _HomepageState extends State<Homepage> {
           ]),
         ),
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Color(0xff0172c0),
           title: Image.asset(
             'logo.png',
             fit: BoxFit.cover,
@@ -99,7 +87,7 @@ class _HomepageState extends State<Homepage> {
                 )),
             10.heightBox,
             StreamBuilder(
-              stream: queryPost(loc, availableResources[resouce]),
+              stream: queryPost(loc, resouce),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Column(
