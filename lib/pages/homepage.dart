@@ -39,7 +39,7 @@ class _HomepageState extends State<Homepage> {
         key: _scaffoldKey,
         drawer: Drawer(
           child: VStack([
-            Image.asset('assets/drawer.jpeg'),
+            Image.asset('assets/drawer.png'),
             10.heightBox,
             SizedBox(
               height: 10,
@@ -100,13 +100,13 @@ class _HomepageState extends State<Homepage> {
                       .p12(),
                 ).objectTopLeft(),
                 Image.asset(
-                  'assets/logo2.png',
+                  'assets/logo.png',
                   height: 40,
                 ).centered(),
               ],
             ),
             10.heightBox,
-            "We provide all latest covid resources in a single place."
+            "We are a group of relentless volunteers on a mission to save lives by finding verified COVID resources."
                 .text
                 .center
                 .medium
@@ -192,7 +192,6 @@ class _HomepageState extends State<Homepage> {
                             xlarge: VxBox(
                                     child: PostWidget(
                                         post: post, context: context))
-                                .shadow
                                 .width(context.screenWidth * 0.55)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -203,7 +202,6 @@ class _HomepageState extends State<Homepage> {
                             large: VxBox(
                                     child: PostWidget(
                                         post: post, context: context))
-                                .shadow
                                 .width(context.screenWidth * 0.55)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -214,7 +212,6 @@ class _HomepageState extends State<Homepage> {
                             medium: VxBox(
                                     child: PostWidget(
                                         post: post, context: context))
-                                .shadow
                                 .width(context.screenWidth * 0.75)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -236,7 +233,6 @@ class _HomepageState extends State<Homepage> {
                             xsmall: VxBox(
                                     child: PostWidget(
                                         post: post, context: context))
-                                .shadow
                                 .width(context.screenWidth * 0.9)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),
@@ -247,7 +243,6 @@ class _HomepageState extends State<Homepage> {
                             fallback: VxBox(
                                     child: PostWidget(
                                         post: post, context: context))
-                                .shadow
                                 .width(context.screenWidth * 0.75)
                                 .withDecoration(BoxDecoration(
                                     border: Border.all(width: 0.3),

@@ -27,6 +27,8 @@ class _MobileFilterState extends State<MobileFilter> {
     'ICU',
     'Beds',
     'Food',
+    'Ambulance',
+    'Others'
   ];
   List locations = [];
   getLoc() async {

@@ -1,7 +1,6 @@
 import 'package:find_covid_leads/pages/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Covid Leads- Find all latest covid resources here',
+      title: 'Covid Lead- Find all latest covid resources here',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

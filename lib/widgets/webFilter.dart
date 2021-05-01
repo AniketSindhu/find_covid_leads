@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:find_covid_leads/methods/getLocations.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,8 @@ class _WebFilterState extends State<WebFilter> {
     'ICU',
     'Beds',
     'Food',
+    'Ambulance',
+    'Others'
   ];
   List locations = [];
   getLoc() async {
@@ -57,8 +60,10 @@ class _WebFilterState extends State<WebFilter> {
           10.heightBox,
           locations.isEmpty
               ? CircularProgressIndicator().centered()
-              : DropdownButtonFormField(
+              : SearchableDropdown.single(
+                  isExpanded: true,
                   iconEnabledColor: Color(0xff0172c0),
+                  displayClearIcon: false,
                   value: location,
                   onChanged: (val) {
                     location = val;
