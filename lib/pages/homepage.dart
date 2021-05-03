@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:find_covid_leads/methods/getTweets.dart';
 import 'package:find_covid_leads/methods/queryPost.dart';
 import 'package:find_covid_leads/models/post.dart';
+import 'package:find_covid_leads/pages/twitterResources.dart';
 import 'package:find_covid_leads/widgets/mobileFilter.dart';
 import 'package:find_covid_leads/widgets/postWidget.dart';
 import 'package:find_covid_leads/widgets/webFilter.dart';
@@ -21,7 +23,9 @@ class _HomepageState extends State<Homepage> {
   List<String> resouce = [];
   bool showMoreLoc = false;
   bool showMoreResources = false;
+  int index = 0;
   void updateLoc(String val) {
+    // getTweets('location', ['resource']);
     setState(() {
       loc = val;
     });
@@ -36,6 +40,22 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context1) {
     return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: FaIcon(FontAwesomeIcons.twitter),
+                label: 'Twitter resources'),
+          ],
+          backgroundColor: Color(0xff0172c0),
+          unselectedItemColor: Colors.white,
+          selectedItemColor: Colors.redAccent,
+          onTap: (val) {
+            index = val;
+            setState(() {});
+          },
+        ),
         key: _scaffoldKey,
         drawer: Drawer(
           child: VStack([
@@ -149,113 +169,125 @@ class _HomepageState extends State<Homepage> {
                   backgroundColor:
                       MaterialStateProperty.all(Color(0xff0172c0))),
             ),
-            StreamBuilder(
-              stream: queryPost(loc, resouce),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Column(
-                    children: [
-                      40.heightBox,
-                      CircularProgressIndicator().centered(),
-                    ],
-                  );
-                } else if (snapshot.data == null || snapshot.hasError) {
-                  //print(snapshot.data.docs[0].data());
-                  print(snapshot.error);
-                  return Column(
-                    children: [
-                      40.heightBox,
-                      "Something Went wrong"
-                          .text
-                          .red500
-                          .size(20)
-                          .makeCentered(),
-                    ],
-                  );
-                } else {
-                  if (snapshot.data.docs.length == 0) {
-                    return Column(
-                      children: [
-                        40.heightBox,
-                        "No leads found".text.red500.size(20).makeCentered(),
-                      ],
-                    );
-                  } else {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          Post post = Post.fromDocument(
-                              snapshot.data.docs[index].data());
-                          return VxResponsive(
-                            xlarge: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .width(context.screenWidth * 0.55)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
-                            large: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .width(context.screenWidth * 0.55)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
-                            medium: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .width(context.screenWidth * 0.75)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
-                            small: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .shadow
-                                .width(context.screenWidth * 0.9)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
-                            xsmall: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .width(context.screenWidth * 0.9)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
-                            fallback: VxBox(
-                                    child: PostWidget(
-                                        post: post, context: context))
-                                .width(context.screenWidth * 0.75)
-                                .withDecoration(BoxDecoration(
-                                    border: Border.all(width: 0.3),
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5)))
-                                .makeCentered()
-                                .py12(),
+            index == 0
+                ? StreamBuilder(
+                    stream: queryPost(loc, resouce),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Column(
+                          children: [
+                            40.heightBox,
+                            CircularProgressIndicator().centered(),
+                          ],
+                        );
+                      } else if (snapshot.data == null || snapshot.hasError) {
+                        //print(snapshot.data.docs[0].data());
+                        print(snapshot.error);
+                        return Column(
+                          children: [
+                            40.heightBox,
+                            "Something Went wrong"
+                                .text
+                                .red500
+                                .size(20)
+                                .makeCentered(),
+                          ],
+                        );
+                      } else {
+                        if (snapshot.data.docs.length == 0) {
+                          return Column(
+                            children: [
+                              40.heightBox,
+                              "No leads found"
+                                  .text
+                                  .red500
+                                  .size(20)
+                                  .makeCentered(),
+                            ],
                           );
-                        }).centered().scrollVertical();
-                  }
-                }
-              },
-            ),
+                        } else {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data.docs.length,
+                              itemBuilder: (context, index) {
+                                Post post = Post.fromDocument(
+                                    snapshot.data.docs[index].data());
+                                return VxResponsive(
+                                  xlarge: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .width(context.screenWidth * 0.55)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                  large: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .width(context.screenWidth * 0.55)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                  medium: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .width(context.screenWidth * 0.75)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                  small: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .shadow
+                                      .width(context.screenWidth * 0.9)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                  xsmall: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .width(context.screenWidth * 0.9)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                  fallback: VxBox(
+                                          child: PostWidget(
+                                              post: post, context: context))
+                                      .width(context.screenWidth * 0.75)
+                                      .withDecoration(BoxDecoration(
+                                          border: Border.all(width: 0.3),
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)))
+                                      .makeCentered()
+                                      .py12(),
+                                );
+                              }).centered().scrollVertical();
+                        }
+                      }
+                    },
+                  )
+                : TwitterResources(location: loc, resource: resouce),
           ],
         ).scrollVertical());
   }
