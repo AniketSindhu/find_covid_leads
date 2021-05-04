@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:find_covid_leads/methods/getLocations.dart';
+import 'package:find_covid_leads/models/cities.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,15 @@ import 'package:flutter/material.dart';
 class WebFilter extends StatefulWidget {
   final Function updateLoc;
   final Function updateRes;
-  WebFilter({this.updateLoc, this.updateRes});
+  final Function updateResTweet;
+  final Function updateLocTweet;
+  final int index;
+  WebFilter(
+      {this.updateLoc,
+      this.updateRes,
+      this.index,
+      this.updateResTweet,
+      this.updateLocTweet});
   @override
   _WebFilterState createState() => _WebFilterState();
 }
@@ -17,6 +26,7 @@ class _WebFilterState extends State<WebFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
   String location = 'All';
+  String locTweet;
   List<String> resources = [];
   List<String> availableResources = [
     'Remdesivir',
@@ -32,6 +42,7 @@ class _WebFilterState extends State<WebFilter> {
     'Others'
   ];
   List locations = [];
+  int resTweet;
   getLoc() async {
     locations = await getLocations();
     setState(() {});
@@ -60,25 +71,42 @@ class _WebFilterState extends State<WebFilter> {
           10.heightBox,
           locations.isEmpty
               ? CircularProgressIndicator().centered()
-              : SearchableDropdown.single(
-                  isExpanded: true,
-                  iconEnabledColor: Color(0xff0172c0),
-                  displayClearIcon: false,
-                  value: location,
-                  onChanged: (val) {
-                    location = val;
-                    widget.updateLoc(val);
-                    setState(() {});
-                  },
-                  items: locations
-                      .map((e) => DropdownMenuItem(
-                            child: '$e'.text.size(15).make().px4(),
-                            value: e,
-                            onTap: () {
-                              print(e);
-                            },
-                          ))
-                      .toList())
+              : widget.index == 0
+                  ? DropdownButtonFormField(
+                      iconEnabledColor: Color(0xff0172c0),
+                      value: location,
+                      onChanged: (val) {
+                        location = val;
+                        widget.updateLoc(val);
+                        setState(() {});
+                      },
+                      items: locations
+                          .map((e) => DropdownMenuItem(
+                                child: '$e'.text.size(15).make().px4(),
+                                value: e,
+                                onTap: () {
+                                  print(e);
+                                },
+                              ))
+                          .toList())
+                  : DropdownButtonFormField(
+                      hint: 'Select a location'.text.make(),
+                      iconEnabledColor: Color(0xff0172c0),
+                      value: locTweet,
+                      onChanged: (val) {
+                        locTweet = val;
+                        widget.updateLocTweet(val);
+                        setState(() {});
+                      },
+                      items: cities
+                          .map((e) => DropdownMenuItem(
+                                child: '$e'.text.size(15).make().px4(),
+                                value: e,
+                                onTap: () {
+                                  print(e);
+                                },
+                              ))
+                          .toList())
 
           /*  Column(
                   children: [
@@ -156,24 +184,40 @@ class _WebFilterState extends State<WebFilter> {
                         },
                       ))
                   .toList()) */
-          ChipsChoice<String>.multiple(
-            wrapped: showMoreRes,
-            spacing: 8,
-            runSpacing: 8,
-            wrapCrossAlignment: WrapCrossAlignment.start,
-            choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
-            value: resources,
-            choiceItems: C2Choice.listFrom<String, String>(
-              source: availableResources,
-              value: (i, v) => v,
-              label: (i, v) => v,
-            ),
-            onChanged: (val) {
-              resources = val;
-              widget.updateRes(val);
-              print(resources);
-            },
-          ),
+          widget.index == 0
+              ? ChipsChoice<String>.multiple(
+                  wrapped: showMoreRes,
+                  spacing: 8,
+                  runSpacing: 8,
+                  wrapCrossAlignment: WrapCrossAlignment.start,
+                  choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
+                  value: resources,
+                  choiceItems: C2Choice.listFrom<String, String>(
+                    source: availableResources,
+                    value: (i, v) => v,
+                    label: (i, v) => v,
+                  ),
+                  onChanged: (val) {
+                    resources = val;
+                    widget.updateRes(val);
+                    print(resources);
+                  },
+                )
+              : ChipsChoice<int>.single(
+                  wrapped: showMoreRes,
+                  value: resTweet,
+                  runSpacing: 10,
+                  choiceActiveStyle: C2ChoiceStyle(color: Color(0xff0172c0)),
+                  onChanged: (val) {
+                    resTweet = val;
+                    widget.updateResTweet(val);
+                  },
+                  choiceItems: C2Choice.listFrom<int, dynamic>(
+                    source: availableResources.withoutLast().toList(),
+                    value: (i, v) => i,
+                    label: (i, v) => v,
+                  ),
+                ),
 /*           ChipsChoice<int>.multiple(
             wrapped: showMoreRes,
             value: resouce,

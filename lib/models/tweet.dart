@@ -1,13 +1,13 @@
 class Tweet {
   String text;
-  String id;
+  String url;
   DateTime createdAt;
-  Tweet({this.createdAt, this.id, this.text});
+  Tweet({this.createdAt, this.url, this.text});
 
   factory Tweet.fromJson(Map<String, dynamic> json) {
     return Tweet(
-        createdAt: DateTime.parse(json['created_at']),
-        id: json['id'].toString(),
+        createdAt: DateTime.parse(json['postedAt']),
+        url: json['url'].toString(),
         text: json['text'].toString());
   }
 }

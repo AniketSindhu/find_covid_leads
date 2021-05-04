@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class TwitterResources extends StatefulWidget {
-  String location;
-  List<String> resource;
+  final String location;
+  final String resource;
   TwitterResources({this.location, this.resource});
   @override
   _TwitterResourcesState createState() => _TwitterResourcesState();
@@ -15,6 +15,20 @@ class TwitterResources extends StatefulWidget {
 class _TwitterResourcesState extends State<TwitterResources> {
   @override
   Widget build(BuildContext context) {
+    if (widget.location == null || widget.resource == null) {
+      return Column(
+        children: [
+          40.heightBox,
+          "Select a specific location and one resource to get tweets"
+              .text
+              .center
+              .red500
+              .size(20)
+              .makeCentered()
+              .px12(),
+        ],
+      );
+    }
     return FutureBuilder(
         future: getTweets(widget.location, widget.resource),
         builder: (context, snapshot) {

@@ -24,6 +24,20 @@ class _HomepageState extends State<Homepage> {
   bool showMoreLoc = false;
   bool showMoreResources = false;
   int index = 0;
+  int resTweet;
+  String locTweet;
+  List<String> availableResources = [
+    'Remdesivir',
+    'Favipiravir',
+    'Oxygen',
+    'Ventilator',
+    'Plasma',
+    'Tocilizumab',
+    'ICU',
+    'Beds',
+    'Food',
+    'Ambulance',
+  ];
   void updateLoc(String val) {
     // getTweets('location', ['resource']);
     setState(() {
@@ -34,6 +48,18 @@ class _HomepageState extends State<Homepage> {
   void updateRes(List<String> val) {
     setState(() {
       resouce = val;
+    });
+  }
+
+  void updateLocTweet(String val) {
+    setState(() {
+      locTweet = val;
+    });
+  }
+
+  void updateResTweet(int val) {
+    setState(() {
+      resTweet = val;
     });
   }
 
@@ -138,10 +164,16 @@ class _HomepageState extends State<Homepage> {
                 mobile: MobileFilter(
                   updateLoc: updateLoc,
                   updateRes: updateRes,
+                  updateResTweet: updateResTweet,
+                  updateLocTweet: updateLocTweet,
+                  index: index,
                 ),
                 web: WebFilter(
                   updateLoc: updateLoc,
                   updateRes: updateRes,
+                  updateResTweet: updateResTweet,
+                  updateLocTweet: updateLocTweet,
+                  index: index,
                 )),
             10.heightBox,
             ElevatedButton(
@@ -287,7 +319,11 @@ class _HomepageState extends State<Homepage> {
                       }
                     },
                   )
-                : TwitterResources(location: loc, resource: resouce),
+                : TwitterResources(
+                    location: locTweet,
+                    resource: resTweet == null
+                        ? resTweet
+                        : availableResources[resTweet]),
           ],
         ).scrollVertical());
   }

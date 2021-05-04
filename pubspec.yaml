@@ -38,7 +38,7 @@ dependencies:
   mime_type: ^1.0.0
   path: ^1.8.0
   readmore: ^2.0.0
-  link_text: ^0.2.0
+  flutter_linkify: ^5.0.2
   url_launcher: ^6.0.3
   big_numbers: ^2.2.0
   font_awesome_flutter: ^9.0.0

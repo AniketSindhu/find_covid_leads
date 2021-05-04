@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_covid_leads/methods/upvote.dart';
 import 'package:find_covid_leads/models/post.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:readmore/readmore.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -151,9 +153,13 @@ class _PostWidgetState extends State<PostWidget> {
                       : Container(),
                   widget.post.description != null ||
                           widget.post.description.trim().length != 0
-                      ? Text(
-                          widget.post.description,
+                      ? SelectableLinkify(
+                          text: widget.post.description,
                           style: TextStyle(fontSize: 14),
+                          linkStyle: TextStyle(color: Color(0xff0172c0)),
+                          onOpen: (url) {
+                            launch(url.url);
+                          },
                         ).objectCenterLeft()
                       : Container()
                 ],
