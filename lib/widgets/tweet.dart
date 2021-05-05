@@ -11,32 +11,55 @@ class TweetUI extends StatelessWidget {
   TweetUI(this.tweet);
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.max, children: [
-      VStack(
-        [
-          HStack(
-            [
-              FaIcon(
-                FontAwesomeIcons.twitter,
-                color: Color(0xff0172c0),
+    return InkWell(
+      onTap: () {
+        launch(tweet.url);
+      },
+      child: Column(mainAxisSize: MainAxisSize.max, children: [
+        VStack(
+          [
+            HStack(
+              [
+                FaIcon(
+                  FontAwesomeIcons.twitter,
+                  color: Color(0xff0172c0),
+                ),
+                timeago.format(tweet.createdAt).text.make()
+              ],
+              alignment: MainAxisAlignment.spaceBetween,
+              axisSize: MainAxisSize.max,
+            ),
+            SizedBox(height: 10),
+            SelectableLinkify(
+              text: tweet.text,
+              onOpen: (url) {
+                launch(url.url);
+              },
+              style: TextStyle(fontSize: 14),
+              linkStyle: TextStyle(color: Color(0xff0172c0)),
+            ).objectCenterLeft(),
+            SizedBox(height: 10),
+            HStack([
+/*               FaIcon(
+                FontAwesomeIcons.heart,
+                size: 15,
+                color: Colors.grey[800],
               ),
-              timeago.format(tweet.createdAt).text.make()
-            ],
-            alignment: MainAxisAlignment.spaceBetween,
-            axisSize: MainAxisSize.max,
-          ),
-          SizedBox(height: 10),
-          SelectableLinkify(
-            text: tweet.text,
-            onOpen: (url) {
-              launch(url.url);
-            },
-            style: TextStyle(fontSize: 14),
-            linkStyle: TextStyle(color: Color(0xff0172c0)),
-          ).objectCenterLeft()
-        ],
-        crossAlignment: CrossAxisAlignment.center,
-      ).p12(),
-    ]);
+              3.widthBox,
+              tweet.likes.toString().text.make(),
+              6.widthBox, */
+              FaIcon(
+                FontAwesomeIcons.retweet,
+                size: 15,
+                color: Colors.grey[800],
+              ),
+              3.widthBox,
+              tweet.retweets.toString().text.make(),
+            ]).objectCenterLeft()
+          ],
+          crossAlignment: CrossAxisAlignment.center,
+        ).p12(),
+      ]),
+    );
   }
 }

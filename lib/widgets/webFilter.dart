@@ -39,7 +39,28 @@ class _WebFilterState extends State<WebFilter> {
     'Beds',
     'Food',
     'Ambulance',
-    'Others'
+    'Fabiflu',
+    'Oxygen beds',
+    'Concentrators',
+    'Oxygen cans',
+    'Oxygen cylinder',
+    'Other'
+  ];
+  List<String> availableResourcesTweets = [
+    "Icu",
+    "Ventilator",
+    "Oxygen Bed",
+    "Bed",
+    "Remdesivir",
+    "Favipiravir",
+    "Tocilizumab",
+    "Plasma",
+    "Food",
+    "Ambulance",
+    "Oxygen Concentrator",
+    "Oxygen Cylinder",
+    "Covid Test",
+    "Helpline"
   ];
   List locations = [];
   int resTweet;
@@ -213,7 +234,7 @@ class _WebFilterState extends State<WebFilter> {
                     widget.updateResTweet(val);
                   },
                   choiceItems: C2Choice.listFrom<int, dynamic>(
-                    source: availableResources.withoutLast().toList(),
+                    source: availableResourcesTweets,
                     value: (i, v) => i,
                     label: (i, v) => v,
                   ),

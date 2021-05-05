@@ -26,17 +26,21 @@ class _HomepageState extends State<Homepage> {
   int index = 0;
   int resTweet;
   String locTweet;
-  List<String> availableResources = [
-    'Remdesivir',
-    'Favipiravir',
-    'Oxygen',
-    'Ventilator',
-    'Plasma',
-    'Tocilizumab',
-    'ICU',
-    'Beds',
-    'Food',
-    'Ambulance',
+  List<String> availableResourcesTweets = [
+    "Icu",
+    "Ventilator",
+    "Oxygen Bed",
+    "Bed",
+    "Remdesivir",
+    "Favipiravir",
+    "Tocilizumab",
+    "Plasma",
+    "Food",
+    "Ambulance",
+    "Oxygen Concentrator",
+    "Oxygen Cylinder",
+    "Covid Test",
+    "Helpline"
   ];
   void updateLoc(String val) {
     // getTweets('location', ['resource']);
@@ -323,7 +327,7 @@ class _HomepageState extends State<Homepage> {
                     location: locTweet,
                     resource: resTweet == null
                         ? resTweet
-                        : availableResources[resTweet]),
+                        : availableResourcesTweets[resTweet].toLowerCase()),
           ],
         ).scrollVertical());
   }

@@ -1,5 +1,4 @@
 import 'package:find_covid_leads/methods/getTweets.dart';
-import 'package:find_covid_leads/models/tweet.dart';
 import 'package:find_covid_leads/widgets/tweet.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -44,7 +43,12 @@ class _TwitterResourcesState extends State<TwitterResources> {
             return Column(
               children: [
                 40.heightBox,
-                "Something Went wrong".text.red500.size(20).makeCentered(),
+                "Something Went wrong"
+                    .text
+                    .red500
+                    .size(20)
+                    .makeCentered()
+                    .px12(),
               ],
             );
           } else {
@@ -52,7 +56,13 @@ class _TwitterResourcesState extends State<TwitterResources> {
               return Column(
                 children: [
                   40.heightBox,
-                  "Something Went wrong".text.red500.size(20).makeCentered(),
+                  "No tweets found for location ${widget.location} & resource ${widget.resource}"
+                      .text
+                      .center
+                      .red500
+                      .size(20)
+                      .makeCentered()
+                      .px12(),
                 ],
               );
             } else {
