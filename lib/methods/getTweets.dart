@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 getTweets(String location, String resource) async {
   //var client = http.Client();
   String query =
-      'https://api.covid.army/api/tweets/${location[0].toUpperCase() + location.substring(1, location.length).toLowerCase()}/${resource.toLowerCase()}';
+      'https://api.covid.army/api/tweets/${location.toLowerCase()}/${resource.toLowerCase().replaceAll(new RegExp(r"\s+"), "")}';
   var url = Uri.parse(query);
   print(url);
   final result = await http.get(url, headers: {});
