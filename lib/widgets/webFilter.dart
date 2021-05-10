@@ -91,7 +91,7 @@ class _WebFilterState extends State<WebFilter> {
           ]),
           10.heightBox,
           locations.isEmpty
-              ? CircularProgressIndicator().centered()
+              ? "Getting locations....".text.color(Color(0xff0172c0)).make()
               : widget.index == 0
                   ? SearchableDropdown.single(
                       displayClearIcon: false,

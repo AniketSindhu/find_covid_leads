@@ -91,9 +91,13 @@ class _MobileFilterState extends State<MobileFilter> {
           ]),
           10.heightBox,
           locations.isEmpty
-              ? CircularProgressIndicator().centered()
+              ? "Getting locations...."
+                  .text
+                  .color(Color(0xff0172c0))
+                  .makeCentered()
               : widget.index == 0
                   ? SearchableDropdown.single(
+                      isExpanded: true,
                       iconEnabledColor: Color(0xff0172c0),
                       value: location,
                       displayClearIcon: false,
@@ -113,6 +117,7 @@ class _MobileFilterState extends State<MobileFilter> {
                           .toList())
                   : SearchableDropdown.single(
                       displayClearIcon: false,
+                      isExpanded: true,
                       hint: 'Select a location'.text.make(),
                       iconEnabledColor: Color(0xff0172c0),
                       value: locTweet,
