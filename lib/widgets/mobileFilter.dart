@@ -93,9 +93,10 @@ class _MobileFilterState extends State<MobileFilter> {
           locations.isEmpty
               ? CircularProgressIndicator().centered()
               : widget.index == 0
-                  ? DropdownButtonFormField(
+                  ? SearchableDropdown.single(
                       iconEnabledColor: Color(0xff0172c0),
                       value: location,
+                      displayClearIcon: false,
                       onChanged: (val) {
                         location = val;
                         widget.updateLoc(val);
@@ -110,7 +111,8 @@ class _MobileFilterState extends State<MobileFilter> {
                                 },
                               ))
                           .toList())
-                  : DropdownButtonFormField(
+                  : SearchableDropdown.single(
+                      displayClearIcon: false,
                       hint: 'Select a location'.text.make(),
                       iconEnabledColor: Color(0xff0172c0),
                       value: locTweet,

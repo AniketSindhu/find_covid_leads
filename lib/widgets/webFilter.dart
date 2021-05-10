@@ -93,7 +93,9 @@ class _WebFilterState extends State<WebFilter> {
           locations.isEmpty
               ? CircularProgressIndicator().centered()
               : widget.index == 0
-                  ? DropdownButtonFormField(
+                  ? SearchableDropdown.single(
+                      displayClearIcon: false,
+                      isExpanded: true,
                       iconEnabledColor: Color(0xff0172c0),
                       value: location,
                       onChanged: (val) {
@@ -110,7 +112,9 @@ class _WebFilterState extends State<WebFilter> {
                                 },
                               ))
                           .toList())
-                  : DropdownButtonFormField(
+                  : SearchableDropdown.single(
+                      displayClearIcon: false,
+                      isExpanded: true,
                       hint: 'Select a location'.text.make(),
                       iconEnabledColor: Color(0xff0172c0),
                       value: locTweet,
