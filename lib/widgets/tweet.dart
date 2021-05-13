@@ -29,6 +29,8 @@ class TweetUI extends StatelessWidget {
               alignment: MainAxisAlignment.spaceBetween,
               axisSize: MainAxisSize.max,
             ),
+            SizedBox(height: 5),
+            tweet.username.text.bold.size(16).make().objectCenterLeft(),
             SizedBox(height: 10),
             SelectableLinkify(
               text: tweet.text,
@@ -38,20 +40,20 @@ class TweetUI extends StatelessWidget {
               style: TextStyle(fontSize: 14),
               linkStyle: TextStyle(color: Color(0xff0172c0)),
             ).objectCenterLeft(),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             HStack([
-/*               FaIcon(
+              FaIcon(
                 FontAwesomeIcons.heart,
                 size: 15,
-                color: Colors.grey[800],
+                color: Colors.red,
               ),
               3.widthBox,
               tweet.likes.toString().text.make(),
-              6.widthBox, */
+              6.widthBox,
               FaIcon(
                 FontAwesomeIcons.retweet,
                 size: 15,
-                color: Colors.grey[800],
+                color: Colors.blue,
               ),
               3.widthBox,
               tweet.retweets.toString().text.make(),

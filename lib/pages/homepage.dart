@@ -20,8 +20,8 @@ class _HomepageState extends State<Homepage> {
   bool showMoreLoc = false;
   bool showMoreResources = false;
   int index = 0;
-  int resTweet;
-  String locTweet;
+  int resTweet = 2;
+  String locTweet = 'Delhi';
   List<String> availableResourcesTweets = [
     "Icu",
     "Ventilator",

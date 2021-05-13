@@ -26,7 +26,7 @@ class _WebFilterState extends State<WebFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
   String location = 'All';
-  String locTweet;
+  String locTweet = 'Delhi';
   List<String> resources = [];
   List<String> availableResources = [
     'Remdesivir',
@@ -63,7 +63,7 @@ class _WebFilterState extends State<WebFilter> {
     "Helpline"
   ];
   List locations = [];
-  int resTweet;
+  int resTweet = 2;
   getLoc() async {
     locations = await getLocations();
     setState(() {});
