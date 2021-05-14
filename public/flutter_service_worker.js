@@ -11,26 +11,24 @@ const RESOURCES = {
 "assets/assets/logo.png": "3eb280505055e4ee4923c919665d81e2",
 "assets/FontManifest.json": "5a32d4310a6f5d9a6b651e75ba0d7372",
 "assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac",
-"assets/NOTICES": "30976b3ef19d7aa49d1f64b6a4c77e0a",
+"assets/NOTICES": "4805b4b13e3159fc4ee7fabf5ca52164",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "00bb2b684be61e89d1bc7d75dee30b58",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "4b6a9b7c20913279a3ad3dd9c96e155b",
 "assets/packages/font_awesome_flutter/lib/fonts/fa-solid-900.ttf": "dffd9504fcb1894620fa41c700172994",
-"browserconfig.xml": "a493ba0aa0b8ec8068d786d7248bb92c",
 "favicon-16x16.png": "09eab6c079ecb544bf3d5eec17eb2e00",
 "favicon-32x32.png": "9e5ad325a3c61ba50a33d299e9a44451",
 "favicon.ico": "5559191649b107a619d7ad0f76e1cce5",
-"favicon.png": "956671b71f308c0a339e4dfcc5f79df4",
+"favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"index.html": "1a6decd47304c947d2f96fcd26f57dad",
-"/": "1a6decd47304c947d2f96fcd26f57dad",
-"main.dart.js": "cad05593914fde676c4a41718d3b434a",
-"manifest.json": "2f6b89cf8035f03916a91e09332fefd4",
+"index.html": "b2c15996d53e3b3acf55122d8e7af05f",
+"/": "b2c15996d53e3b3acf55122d8e7af05f",
+"main.dart.js": "9d148f1216fcd7b76c1604b7ad81f812",
+"manifest.json": "070368544e072d4a4a13a0e736cd88c7",
 "mstile-150x150.png": "ad832d604af267fa3879103d03746a62",
 "safari-pinned-tab.svg": "bac3591150a6421978e207ec9bdb2f9b",
-"site.webmanifest": "b9aa277fcfc34c31db6c7a7ea3469b8c",
-"version.json": "d61acac7422f136a7d19b5e666350c9d"
+"version.json": "8b57f49277dfe33c07d5ef9e755fe8ac"
 };
 
 // The application shell files that are downloaded before a service worker can

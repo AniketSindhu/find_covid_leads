@@ -1,6 +1,6 @@
 {
-    "name": "find_covid_leads",
-    "short_name": "find_covid_leads",
+    "name": "find_covid_leads_2",
+    "short_name": "find_covid_leads_2",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

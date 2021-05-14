@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.find_covid_leads">
+    package="com.example.find_covid_leads_2">
    <application
-        android:label="find_covid_leads"
+        android:label="find_covid_leads_2"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
