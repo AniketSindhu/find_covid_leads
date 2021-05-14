@@ -26,7 +26,7 @@ class _MobileFilterState extends State<MobileFilter> {
   bool showMoreLoc = false;
   bool showMoreRes = false;
   String location = 'All';
-  String locTweet= 'Delhi';
+  String locTweet = 'Delhi';
   List<String> resources = [];
   List<String> availableResources = [
     'Remdesivir',
@@ -47,8 +47,8 @@ class _MobileFilterState extends State<MobileFilter> {
     'Other'
   ];
   List<String> availableResourcesTweets = [
-    "Icu",
-    "Ventilator",
+    "Home ICU",
+    "ICU Bed",
     "Oxygen Bed",
     "Bed",
     "Remdesivir",
@@ -57,10 +57,10 @@ class _MobileFilterState extends State<MobileFilter> {
     "Plasma",
     "Food",
     "Ambulance",
-    "Oxygen Concentrator",
     "Oxygen Cylinder",
+    "Oxygen Concentrator",
     "Covid Test",
-    "Helpline"
+    "Helpline",
   ];
   List locations = [];
   int resTweet = 2;

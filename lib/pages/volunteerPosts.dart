@@ -10,11 +10,12 @@ class VolunteerPost extends StatelessWidget {
     Key key,
     @required this.loc,
     @required this.resouce,
+    this.controller,
   }) : super(key: key);
 
   final String loc;
   final List<String> resouce;
-
+  final ScrollController controller;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -47,7 +48,6 @@ class VolunteerPost extends StatelessWidget {
           }
           return ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 Post post = Post.fromDocument(snapshot.data.docs[index].data());
@@ -103,7 +103,7 @@ class VolunteerPost extends StatelessWidget {
                           .makeCentered()
                           .py12(),
                 );
-              }).centered().scrollVertical();
+              }).centered();
         }
       },
     );

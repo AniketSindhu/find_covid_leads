@@ -47,8 +47,8 @@ class _WebFilterState extends State<WebFilter> {
     'Other'
   ];
   List<String> availableResourcesTweets = [
-    "Icu",
-    "Ventilator",
+    "Home ICU",
+    "ICU Bed",
     "Oxygen Bed",
     "Bed",
     "Remdesivir",
@@ -57,10 +57,10 @@ class _WebFilterState extends State<WebFilter> {
     "Plasma",
     "Food",
     "Ambulance",
-    "Oxygen Concentrator",
     "Oxygen Cylinder",
+    "Oxygen Concentrator",
     "Covid Test",
-    "Helpline"
+    "Helpline",
   ];
   List locations = [];
   int resTweet = 2;
